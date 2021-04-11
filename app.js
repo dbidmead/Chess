@@ -11,23 +11,33 @@ BOARD.init();
 function select(e) {
   CTX.clearRect(0, 0, CANVAS.width, CANVAS.height);
   BOARD.draw();
+  for(let i = 0; i < 8; i++) {
+    for(let j = 0; j < 8; j++) {
+      if(BOARD.array[i][j] != 0) {
+        BOARD.array[i][j].selected = false;
+      }
+    }
+  }
 
   let rowIndex = Math.floor(e.layerY/SQUARE_WIDTH);
   let colIndex = Math.floor(e.layerX/SQUARE_WIDTH);
+  let piece = BOARD.array[rowIndex][colIndex]
 
-  if(BOARD.array[rowIndex][colIndex] != 0) {
+  if(piece != 0) {
     let x = colIndex * SQUARE_WIDTH;
     let y = rowIndex * SQUARE_WIDTH;
+
+    piece.selected = true;
+    piece.getVision(rowIndex, colIndex, piece);
+    piece.drawVision()
 
     CTX.strokeStyle = 'cyan';
     CTX.lineWidth = 5;
     CTX.strokeRect(x, y, SQUARE_WIDTH, SQUARE_WIDTH);
 
-    
-    console.log(BOARD.array[rowIndex][colIndex]);
+    // console.log(piece.vision);
   }
   // console.log(CTX)
 }
-
 
 CANVAS.addEventListener('click', select)

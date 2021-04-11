@@ -7,6 +7,7 @@ class Piece {
     this.vision = [];
     this.isKing = false;
     this.imgSrc;
+    this.selected = false;
   }
 
   draw() {
@@ -18,7 +19,17 @@ class Piece {
       CTX.drawImage(img, x, y, PIECE_WIDTH, PIECE_WIDTH);
     }
   };
-// need to draw piece vision if selected
+
+  drawVision() {
+    for(let i = 0; i < this.vision.length; i++) {
+      let x = this.vision[i][1] * SQUARE_WIDTH;
+      let y = this.vision[i][0] * SQUARE_WIDTH;
+
+      CTX.strokeStyle = 'red';
+      CTX.lineWidth = 5;
+      CTX.strokeRect(x, y, SQUARE_WIDTH, SQUARE_WIDTH);
+    }
+  }
 }
 
 class Pawn extends Piece {
@@ -28,19 +39,15 @@ class Pawn extends Piece {
     this.vertDirection = this.color == 'w' ? -1 : 1;
   }
 
-  getVision() {
-    VisionRules.pawnCapture();
-    if(this.firstMove == true) {
-      VisionRules.pawnFirst();
+  getVision(row, col, piece) {
+    // this.vision.concat(VisionRules.pawnCapture(row, col, piece));
+    if(this.firstMove) {
+      this.vision = [...this.vision, ...VisionRules.pawnFirst(row, col, piece)];
     } else {
-      VisionRules.pawnOther();
+      this.vision = [...this.vision, ...VisionRules.pawnOther(row, col, piece)];
     }
+    // console.log(piece)
   }
-
-  drawVision() {
-
-  }
-
 }
 
 class Knight extends Piece {
@@ -49,12 +56,8 @@ class Knight extends Piece {
     this.imgSrc = './img/knight_' + this.color + '.png';
   }
 
-  getVision() {
-    VisionRules.knight();
-  }
-
-  drawVision() {
-
+  getVision(row, col, piece) {
+    this.vision = [...this.vision, ...VisionRules.knight(row, col, piece)];
   }
 }
 
@@ -64,12 +67,8 @@ class Bishop extends Piece {
     this.imgSrc = './img/bishop_' + this.color + '.png';
   }
 
-  getVision() {
-    VisionRules.diagBeam();
-  }
-
-  drawVision() {
-
+  getVision(row, col, piece) {
+    this.vision = [...this.vision, ...VisionRules.diagBeam(row, col, piece)];
   }
 }
 
@@ -79,12 +78,8 @@ class Rook extends Piece {
     this.imgSrc = './img/rook_' + this.color + '.png';
   }
 
-  getVision() {
-    VisionRules.straightBeam();
-  }
-
-  drawVision() {
-
+  getVision(row, col, piece) {
+    this.vision = [...this.vision, ...VisionRules.straightBeam(row, col, piece)];
   }
 }
 
@@ -94,13 +89,8 @@ class Queen extends Piece {
     this.imgSrc = './img/queen_' + this.color + '.png';
   }
 
-  getVision() {
-    VisionRules.straightBeam();
-    VisionRules.diagBeam();
-  }
-
-  drawVision() {
-
+  getVision(row, col, piece) {
+    this.vision = [...this.vision, ...VisionRules.diagBeam(row, col, piece), ...VisionRules.straightBeam(row, col, piece)];
   }
 }
 
@@ -111,11 +101,7 @@ class King extends Piece {
     this.imgSrc = './img/king_' + this.color + '.png'
   }
 
-  getVision() {
-    VisionRules.king();
-  }
-
-  drawVision() {
-
+  getVision(row, col, piece) {
+    this.vision = [...this.vision, ...VisionRules.king(row, col, piece)];
   }
 }
