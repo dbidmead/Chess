@@ -39,7 +39,10 @@ function select(e) {
 
     CTX.strokeStyle = 'cyan';
     CTX.lineWidth = 5;
-    CTX.strokeRect(x, y, SQUARE_WIDTH, SQUARE_WIDTH);
+    CTX.strokeRect(x + CTX.lineWidth/2, y + CTX.lineWidth/2, SQUARE_WIDTH - CTX.lineWidth, SQUARE_WIDTH - CTX.lineWidth);
+
+    //console.log(piece.vision)
+    //console.log(BOARD.array)
 
     CANVAS.removeEventListener('click', select);
     CANVAS.addEventListener('click', move);
@@ -48,7 +51,7 @@ function select(e) {
 
 CANVAS.addEventListener('click', select);
 
-function contains(array, checkX, checkY) {
+function checkCand(array, checkX, checkY) {
   for(let i = 0; i < array.length; i++) {
     if(array[i][0] == checkY && array[i][1] == checkX) {
       return true;
@@ -60,7 +63,6 @@ function contains(array, checkX, checkY) {
 function move(e) {
   candY = Math.floor(e.layerY/SQUARE_WIDTH);
   candX = Math.floor(e.layerX/SQUARE_WIDTH);
-  console.log('this', candX, candY)
 
   if(somethingSelected) {
     for(let i = 0; i < 8; i++) {
@@ -73,8 +75,8 @@ function move(e) {
       }
     }
 
-    if(contains(piece.vision, candX, candY)) {
-      console.log('yay')
+    if(checkCand(piece.vision, candX, candY)) {
+      //console.log('yay')
       BOARD.array[piece.row][piece.col] = 0;
       piece.row = candY;
       piece.col = candX;
@@ -90,3 +92,5 @@ function move(e) {
   }
   // console.log(CTX)
 }
+
+console.log(BOARD.array)

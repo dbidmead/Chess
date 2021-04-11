@@ -27,7 +27,7 @@ class Piece {
 
       CTX.strokeStyle = 'red';
       CTX.lineWidth = 5;
-      CTX.strokeRect(x, y, SQUARE_WIDTH, SQUARE_WIDTH);
+      CTX.strokeRect(x + CTX.lineWidth/2, y + CTX.lineWidth/2, SQUARE_WIDTH - CTX.lineWidth, SQUARE_WIDTH - CTX.lineWidth);
     }
   }
 }
@@ -40,7 +40,7 @@ class Pawn extends Piece {
   }
 
   getVision(row, col, piece) {
-    // this.vision.concat(VisionRules.pawnCapture(row, col, piece));
+    this.vision = [...this.vision, ...VisionRules.pawnCapture(row, col, piece)];
     if(this.firstMove) {
       this.vision = [...this.vision, ...VisionRules.pawnFirst(row, col, piece)];
     } else {
