@@ -10,11 +10,11 @@ The purpose of this project is to code the visuals and logic of chess.
 * Give turns
 
 ### Ideas
-- [ ] Board will consist of a 2D array for game logic, and have a draw method
-- [ ] Draw the board using the canvas feature using some pixel math
-- [ ] Create Piece class and have the pieces extend it
-- [ ] Potential Rules class?
-- [ ] Piece motion rules: re-use diagonal and straight beaming moves
+- [X] Board will consist of a 2D array for game logic, and have a draw method
+- [X] Draw the board using the canvas feature using some pixel math
+- [X] Create Piece class and have the pieces extend it
+- [X] Potential Rules class? - Rules object.
+- [X] Piece motion rules: re-use diagonal and straight beaming moves
 - [ ] Pawn moves (up two on first move, only move forward, capture diagonal, en passant if on 5th rank, promotion)
 - [ ] Castles
 - [ ] inCheck boolean: is king's position in the vision of an enemy piece
