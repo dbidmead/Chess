@@ -35,6 +35,23 @@ function select(e) {
 
     piece.selected = true;
     piece.getVision(rowIndex, colIndex, piece);
+
+    // CASTLES: adds castling squares to King's vision array when appropriate
+    if(piece.isKing && piece.firstMove) {
+      let rookL;
+      let rookR;
+      if(BOARD.array[rowIndex][0] != 0) {
+        if(BOARD.array[rowIndex][0].firstMove) {
+          rookL = BOARD.array[rowIndex][0];
+        }
+      }
+      if(BOARD.array[rowIndex][7] != 0) {
+        if(BOARD.array[rowIndex][7].firstMove) {
+          rookR = BOARD.array[rowIndex][7];
+        }
+      }
+      VisionRules.castles(piece, rookL, rookR);
+    }
     piece.drawVision();
 
     CTX.fillStyle = '#83B3F0'
@@ -76,8 +93,27 @@ function move(e) {
     }
 
     if(checkCand(piece.vision, candX, candY)) {
-      //console.log('yay')
       BOARD.array[piece.row][piece.col] = 0;
+
+      // CASTLES: move correct rook if king goes to castles vision option; will have to edit "if" statements when checks are implemented
+      if(piece.isKing) {
+        if(candX == piece.col - 2) {
+          let rookL = BOARD.array[piece.row][0];
+          rookL.col = candX + 1;
+          BOARD.array[piece.row][rookL.col] = rookL;
+          BOARD.array[piece.row][0] = 0;
+          rookL.firstMove = false;
+        }
+        if(candX == piece.col + 2) {
+          let rookR = BOARD.array[piece.row][7];
+          rookR.col = candX - 1;
+          BOARD.array[piece.row][rookR.col] = rookR;
+          BOARD.array[piece.row][7] = 0;
+          rookR.firstMove = false;
+        }
+      }
+
+      // move actual selected piece
       piece.row = candY;
       piece.col = candX;
       BOARD.array[piece.row][piece.col] = piece;
@@ -90,7 +126,7 @@ function move(e) {
     CANVAS.removeEventListener('click', move);
     CANVAS.addEventListener('click', select);
   }
-  // console.log(CTX)
+  //console.log(CTX)
 }
 
-console.log(BOARD.array)
+//console.log(BOARD.array)

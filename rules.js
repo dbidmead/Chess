@@ -13,7 +13,7 @@ var VisionRules = {
           collision = true;
         }
       } else { i++ }
-    } 
+    }
   },
 
   checkStaticCollide: function(arr, piece) {
@@ -259,6 +259,78 @@ var VisionRules = {
 
     //consider castles
     return visionIndexCoords;
+  },
+
+  // functions to be called upon select after getVision()
+  castles: function(king, leftRook, rightRook) {
+    let kingRow;
+    let kingIndex;
+    let leftOpen = true;
+    let rightOpen = true;
+    if(BOARD.whitePerspective) {
+      if(king.color == 'w') {
+        kingRow = 7;
+      } else {
+        kingRow = 0;
+      }
+      kingIndex = 4;
+    } else {
+      if(king.color == 'w') {
+        kingRow = 0;
+      } else {
+        kingRow = 7;
+      }
+      kingIndex = 3;
+    }
+    console.log(kingRow, kingIndex)
+    console.log(king.color)
+    // will only work if king is selected
+    if(king.firstMove) {
+      // check left Castles
+      if(leftRook) {
+        if(leftRook.firstMove) {
+          for(let i = 1; i < kingIndex; i++) {
+            if(BOARD.array[kingRow][i] != 0) {
+              leftOpen = false;
+            }
+          }
+        }
+
+        if(leftOpen) {
+          king.vision.push([kingRow, kingIndex - 2]);
+        }
+      }
+
+
+      // check right Castles
+      if(rightRook) {
+        if(rightRook.firstMove) {
+          for(let i = kingIndex + 1; i < 7; i++) {
+            if(BOARD.array[kingRow][i] != 0) {
+              rightOpen = false;
+            }
+          }
+        }
+
+        if(rightOpen) {
+          king.vision.push([kingRow, kingIndex + 2]);
+        }
+      }
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
   }
 
 }
