@@ -37,10 +37,10 @@ function select(e) {
     piece.getVision(rowIndex, colIndex, piece);
     piece.drawVision();
 
-    CTX.strokeStyle = 'cyan';
-    CTX.lineWidth = 5;
-    CTX.strokeRect(x + CTX.lineWidth/2, y + CTX.lineWidth/2, SQUARE_WIDTH - CTX.lineWidth, SQUARE_WIDTH - CTX.lineWidth);
-
+    CTX.fillStyle = '#83B3F0'
+    CTX.strokeStyle = '#6A9CDB';
+    CTX.fillRect(x, y, SQUARE_WIDTH, SQUARE_WIDTH);
+    CTX.strokeRect(x, y, SQUARE_WIDTH, SQUARE_WIDTH);
     //console.log(piece.vision)
     //console.log(BOARD.array)
 

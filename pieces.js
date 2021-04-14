@@ -25,9 +25,10 @@ class Piece {
       let x = this.vision[i][1] * SQUARE_WIDTH;
       let y = this.vision[i][0] * SQUARE_WIDTH;
 
-      CTX.strokeStyle = 'red';
-      CTX.lineWidth = 5;
-      CTX.strokeRect(x + CTX.lineWidth/2, y + CTX.lineWidth/2, SQUARE_WIDTH - CTX.lineWidth, SQUARE_WIDTH - CTX.lineWidth);
+      CTX.fillStyle = '#83F089';
+      CTX.strokeStyle = '#906DB3';
+      CTX.fillRect(x, y, SQUARE_WIDTH, SQUARE_WIDTH);
+      CTX.strokeRect(x, y, SQUARE_WIDTH, SQUARE_WIDTH);
     }
   }
 }
@@ -35,7 +36,7 @@ class Piece {
 class Pawn extends Piece {
   constructor(row, col, color) {
     super(row, col, color);
-    this.imgSrc = './img/pawn_' + this.color + '.png';
+    this.imgSrc = './img/pawn_' + this.color + '.svg';
     this.vertDirection = this.color == 'w' ? -1 : 1;
   }
 
@@ -53,7 +54,7 @@ class Pawn extends Piece {
 class Knight extends Piece {
   constructor(row, col, color) {
     super(row, col, color);
-    this.imgSrc = './img/knight_' + this.color + '.png';
+    this.imgSrc = './img/knight_' + this.color + '.svg';
   }
 
   getVision(row, col, piece) {
@@ -64,7 +65,7 @@ class Knight extends Piece {
 class Bishop extends Piece {
   constructor(row, col, color) {
     super(row, col, color);
-    this.imgSrc = './img/bishop_' + this.color + '.png';
+    this.imgSrc = './img/bishop_' + this.color + '.svg';
   }
 
   getVision(row, col, piece) {
@@ -75,7 +76,7 @@ class Bishop extends Piece {
 class Rook extends Piece {
   constructor(row, col, color) {
     super(row, col, color);
-    this.imgSrc = './img/rook_' + this.color + '.png';
+    this.imgSrc = './img/rook_' + this.color + '.svg';
   }
 
   getVision(row, col, piece) {
@@ -86,7 +87,7 @@ class Rook extends Piece {
 class Queen extends Piece {
   constructor(row, col, color) {
     super(row, col, color);
-    this.imgSrc = './img/queen_' + this.color + '.png';
+    this.imgSrc = './img/queen_' + this.color + '.svg';
   }
 
   getVision(row, col, piece) {
@@ -98,7 +99,7 @@ class King extends Piece {
   constructor(row, col, color) {
     super(row, col, color);
     this.isKing = true;
-    this.imgSrc = './img/king_' + this.color + '.png'
+    this.imgSrc = './img/king_' + this.color + '.svg'
   }
 
   getVision(row, col, piece) {
