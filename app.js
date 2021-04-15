@@ -8,6 +8,8 @@ const BOARD = new Board();
 let candX
 let candY
 let somethingSelected = false;
+let whiteToMove = true;
+let turnColor;
 
 BOARD.init();
 
@@ -28,7 +30,13 @@ function select(e) {
   let colIndex = Math.floor(e.layerX/SQUARE_WIDTH);
   let piece = BOARD.array[rowIndex][colIndex];
 
-  if(piece != 0) {
+  if(whiteToMove) {
+    turnColor = 'w';
+  } else {
+    turnColor = 'b';
+  }
+
+  if(piece != 0 && piece.color == turnColor) {
     somethingSelected = true;
     let x = colIndex * SQUARE_WIDTH;
     let y = rowIndex * SQUARE_WIDTH;
@@ -94,6 +102,16 @@ function move(e) {
 
     if(checkCand(piece.vision, candX, candY)) {
       BOARD.array[piece.row][piece.col] = 0;
+      // reset en passant
+      for(let i = 0; i < 8; i++) {
+        for(let j = 0; j < 8; j++) {
+          if(BOARD.array[i][j] != 0) {
+            if(BOARD.array[i][j].isPawn) {
+              BOARD.array[i][j].jumpedTwo = false;
+            }
+          }
+        }
+      }
 
       // CASTLES: move correct rook if king goes to castles vision option
       // !!!!!!!!! will have to edit "if" statements when checks are implemented
@@ -142,9 +160,15 @@ function move(e) {
       }
 
       if(piece.firstMove) { piece.firstMove = false };
+      if(whiteToMove) {
+        whiteToMove = false;
+      } else {
+        whiteToMove = true;
+      }
     }
     piece.selected = false;
     piece.vision = [];
+
     BOARD.draw();
     somethingSelected = false;
     CANVAS.removeEventListener('click', move);
