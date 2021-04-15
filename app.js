@@ -16,19 +16,39 @@ BOARD.init();
 FLIP_BUTTON.addEventListener('click', flipBoard);
 
 function flipBoard() {
-  // goal at this point is to reset the game; !!!!!!!!! maybe some matrix math to keep the position but flip
+
   if(BOARD.whitePerspective) {
     BOARD.whitePerspective = false;
   } else {
     BOARD.whitePerspective = true;
   }
 
-  whiteToMove = true;
-  BOARD.init()
+  BOARD.array.reverse();
+  BOARD.array.forEach(arr => {
+    arr.reverse();
+  });
   for(let i = 0; i < 8; i++) {
-    BOARD.array[1][i].vertDirection = 1;
-    BOARD.array[6][i].vertDirection = -1;
+    for(let j = 0; j < 8; j++) {
+      let piece = BOARD.array[i][j];
+      if(piece != 0) {
+        piece.row = i;
+        piece.col = j;
+      }
+    }
   }
+
+  for(let i = 0; i < 8; i++) {
+    for(let j = 0; j < 8; j++) {
+      let pawn = BOARD.array[i][j];
+      if(pawn != 0) {
+        if(pawn.isPawn) {
+          pawn.vertDirection *= -1;
+        }
+      }
+    }
+  }
+
+  BOARD.draw();
 }
 
 function select(e) {
@@ -155,7 +175,7 @@ function move(e) {
         // EN PASSANT
         if(candY == piece.row + (2 * piece.vertDirection)) {
           piece.advanced += 2;
-          piece.jumpedTwo = true; 
+          piece.jumpedTwo = true;
         } else {
           piece.advanced++;
         }
