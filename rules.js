@@ -1,7 +1,7 @@
 var VisionRules = {
   checkCollide: function(array, piece) {
     let collision = false;
-    let i = 1;
+    let i = 0;
     while(i < array.length && !collision) {
       let square = BOARD.array[array[i][0]][array[i][1]];
       if(square != 0) {
@@ -127,7 +127,7 @@ var VisionRules = {
     let visionIndexCoordsR = [];
 
     // up
-    for(let i = 0; i < 8; i++) {
+    for(let i = 1; i < 8; i++) {
       if(row - i > -1) {
         visionIndexCoordsU.push([(row - i), col]);
       }
@@ -135,7 +135,7 @@ var VisionRules = {
     this.checkCollide(visionIndexCoordsU, piece);
 
     // down
-    for(let i = 0; i < 8; i++) {
+    for(let i = 1; i < 8; i++) {
       if(row + i < 8) {
         visionIndexCoordsD.push([(row + i), col]);
       }
@@ -143,7 +143,7 @@ var VisionRules = {
     this.checkCollide(visionIndexCoordsD, piece);
 
     // left
-    for(let i = 0; i < 8; i++) {
+    for(let i = 1; i < 8; i++) {
       if(col - i > -1) {
         visionIndexCoordsL.push([row, (col - i)]);
       }
@@ -151,7 +151,7 @@ var VisionRules = {
     this.checkCollide(visionIndexCoordsL, piece);
 
     // right
-    for(let i = 0; i < 8; i++) {
+    for(let i = 1; i < 8; i++) {
       if(col + i < 8) {
         visionIndexCoordsR.push([row, (col + i)]);
       }
@@ -170,7 +170,7 @@ var VisionRules = {
     let visionIndexCoordsDR = [];
 
     // up and left
-    for(let i = 0; i < 8; i++) {
+    for(let i = 1; i < 8; i++) {
       if(row - i > -1 && col - i > -1) {
         visionIndexCoordsUL.push([(row - i), (col - i)]);
       }
@@ -178,7 +178,7 @@ var VisionRules = {
     this.checkCollide(visionIndexCoordsUL, piece);
 
     // up and right
-    for(let i = 0; i < 8; i++) {
+    for(let i = 1; i < 8; i++) {
       if(row - i > -1 && col + i < 8) {
         visionIndexCoordsUR.push([(row - i), (col + i)]);
       }
@@ -186,7 +186,7 @@ var VisionRules = {
     this.checkCollide(visionIndexCoordsUR, piece);
 
     // down and left
-    for(let i = 0; i < 8; i++) {
+    for(let i = 1; i < 8; i++) {
       if(row + i < 8 && col - i > -1) {
         visionIndexCoordsDL.push([(row + i), (col - i)]);
       }
@@ -194,7 +194,7 @@ var VisionRules = {
     this.checkCollide(visionIndexCoordsDL, piece);
 
     // down and right
-    for(let i = 0; i < 8; i++) {
+    for(let i = 1; i < 8; i++) {
       if(row + i < 8 && col + i < 8) {
         visionIndexCoordsDR.push([(row + i), (col + i)]);
       }
