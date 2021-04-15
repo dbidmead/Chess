@@ -4,6 +4,7 @@ const SQUARE_WIDTH = CANVAS.width / 8;
 const PIECE_PADDING = 5;
 const PIECE_WIDTH = SQUARE_WIDTH - 2 * PIECE_PADDING;
 const BOARD = new Board();
+const FLIP_BUTTON = document.getElementById('flip-button');
 
 let candX
 let candY
@@ -12,6 +13,23 @@ let whiteToMove = true;
 let turnColor;
 
 BOARD.init();
+FLIP_BUTTON.addEventListener('click', flipBoard);
+
+function flipBoard() {
+  // goal at this point is to reset the game; !!!!!!!!! maybe some matrix math to keep the position but flip
+  if(BOARD.whitePerspective) {
+    BOARD.whitePerspective = false;
+  } else {
+    BOARD.whitePerspective = true;
+  }
+
+  whiteToMove = true;
+  BOARD.init()
+  for(let i = 0; i < 8; i++) {
+    BOARD.array[1][i].vertDirection = 1;
+    BOARD.array[6][i].vertDirection = -1;
+  }
+}
 
 function select(e) {
   if(!somethingSelected) {
@@ -137,7 +155,7 @@ function move(e) {
         // EN PASSANT
         if(candY == piece.row + (2 * piece.vertDirection)) {
           piece.advanced += 2;
-          piece.jumpedTwo = true; // !!!!!!!!! when you implement turns, this will turn false each turn / every second switch
+          piece.jumpedTwo = true; 
         } else {
           piece.advanced++;
         }

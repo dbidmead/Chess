@@ -1,10 +1,11 @@
 class Board {
   constructor() {
-    this.array = []; //push piece objects or 0's
+    this.array; //push piece objects or 0's
     this.whitePerspective = true; //will toggle to false from a button; in function also make sure to change each pawn's vertdirection
   }
 
   fillArray() {
+    this.array = [];
     if(this.whitePerspective) {
 
       for(let i = 0; i < 8; i++) { this.array.push([]) };
