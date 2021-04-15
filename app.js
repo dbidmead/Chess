@@ -95,7 +95,8 @@ function move(e) {
     if(checkCand(piece.vision, candX, candY)) {
       BOARD.array[piece.row][piece.col] = 0;
 
-      // CASTLES: move correct rook if king goes to castles vision option; will have to edit "if" statements when checks are implemented
+      // CASTLES: move correct rook if king goes to castles vision option
+      // !!!!!!!!! will have to edit "if" statements when checks are implemented
       if(piece.isKing) {
         if(candX == piece.col - 2) {
           let rookL = BOARD.array[piece.row][0];
@@ -113,10 +114,33 @@ function move(e) {
         }
       }
 
+
+      if(piece.isPawn) {
+        // EN PASSANT
+        if(candY == piece.row + (2 * piece.vertDirection)) {
+          piece.advanced += 2;
+          piece.jumpedTwo = true; // !!!!!!!!! when you implement turns, this will turn false each turn / every second switch
+        } else {
+          piece.advanced++;
+        }
+        if(candX != piece.col && BOARD.array[candY][candX] == 0) {
+          BOARD.array[piece.row][candX] = 0;
+        }
+        // console.log(piece.advanced, piece.jumpedTwo);
+      }
+
       // move actual selected piece
       piece.row = candY;
       piece.col = candX;
       BOARD.array[piece.row][piece.col] = piece;
+
+      if(piece.isPawn) {
+        // PROMOTION (eventually aim to give options with a pop-up menu)
+        if(piece.advanced == 6) {
+          BOARD.array[piece.row][piece.col] = new Queen(piece.row, piece.col, piece.color);
+        }
+      }
+
       if(piece.firstMove) { piece.firstMove = false };
     }
     piece.selected = false;

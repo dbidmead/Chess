@@ -81,6 +81,17 @@ var VisionRules = {
             visionIndexCoords.push([(row + piece.vertDirection), (col - 1)]);
           }
         }
+
+        // check en passant
+        if(piece.advanced == 3) { // on the fourth rank from back
+          if(BOARD.array[row][col - 1] != 0) {
+            if(BOARD.array[row][col - 1].isPawn) {
+              if(BOARD.array[row][col - 1].jumpedTwo) {
+                visionIndexCoords.push([(row + piece.vertDirection),(col - 1)]);
+              }
+            }
+          }
+        }
     }
 
     // capture right
@@ -90,6 +101,17 @@ var VisionRules = {
         if(BOARD.array[row + piece.vertDirection][col + 1] != 0) {
           if(BOARD.array[row + piece.vertDirection][col + 1].color != piece.color) {
             visionIndexCoords.push([(row + piece.vertDirection), (col + 1)]);
+          }
+        }
+
+        // check en passant
+        if(piece.advanced == 3) { // on the fourth rank from back
+          if(BOARD.array[row][col + 1] != 0) {
+            if(BOARD.array[row][col + 1].isPawn) {
+              if(BOARD.array[row][col + 1].jumpedTwo) {
+                visionIndexCoords.push([(row + piece.vertDirection),(col + 1)]);
+              }
+            }
           }
         }
     }
@@ -136,7 +158,6 @@ var VisionRules = {
     }
     this.checkCollide(visionIndexCoordsR, piece);
 
-    //consider castles if rook
     visionIndexCoords = [...visionIndexCoordsU, ...visionIndexCoordsD, ...visionIndexCoordsL, ...visionIndexCoordsR];
     return visionIndexCoords;
   },
@@ -257,11 +278,10 @@ var VisionRules = {
 
     this.checkStaticCollide(visionIndexCoords, piece);
 
-    //consider castles
     return visionIndexCoords;
   },
 
-  // functions to be called upon select after getVision()
+  // function to be called in select() after piece.getVision()
   castles: function(king, leftRook, rightRook) {
     let kingRow;
     let kingIndex;
@@ -295,12 +315,10 @@ var VisionRules = {
             }
           }
         }
-
         if(leftOpen) {
           king.vision.push([kingRow, kingIndex - 2]);
         }
       }
-
 
       // check right Castles
       if(rightRook) {
@@ -311,26 +329,10 @@ var VisionRules = {
             }
           }
         }
-
         if(rightOpen) {
           king.vision.push([kingRow, kingIndex + 2]);
         }
       }
-
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
   }
-
 }

@@ -15,8 +15,8 @@ The purpose of this project is to code the visuals and logic of chess.
 - [X] Create Piece class and have the pieces extend it
 - [X] Potential Rules class? - Rules object.
 - [X] Piece motion rules: re-use diagonal and straight beaming moves
-- [ ] Pawn moves (up two on first move, only move forward, capture diagonal, en passant if on 5th rank, promotion)
-- [ ] Castles
+- [X] Pawn moves (up two on first move, only move forward, capture diagonal, en passant if on 5th rank, promotion)
+- [X] Castles
 - [ ] inCheck boolean: is king's position in the vision of an enemy piece
 - [ ] Checkmate: every move leads to check and inCheck = true
 - [ ] Stalemate: every move leads to check and inCheck = false

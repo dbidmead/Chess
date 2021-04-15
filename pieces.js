@@ -6,6 +6,7 @@ class Piece {
     this.firstMove = true;
     this.vision = [];
     this.isKing = false;
+    this.isPawn = false;
     this.imgSrc;
     this.selected = false;
   }
@@ -36,8 +37,11 @@ class Piece {
 class Pawn extends Piece {
   constructor(row, col, color) {
     super(row, col, color);
+    this.isPawn = true;
     this.imgSrc = './img/pawn_' + this.color + '.svg';
     this.vertDirection = this.color == 'w' ? -1 : 1;
+    this.jumpedTwo = false;
+    this.advanced = 0;
   }
 
   getVision(row, col, piece) {
